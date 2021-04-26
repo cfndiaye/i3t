@@ -1,21 +1,26 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Home from './Home';
+import Filieres from './Filieres';
+import PreInscription from './PreInscription';
+import Contact from './Contact';
 
 function Nav(props) {
   return (
-    <div>
-      <nav class="navbar navbar-expand-sm navbar-dark bg-success fixed-top">
-        <a className="navbar-brand" href="home">
+    <Router>
+      <nav className="navbar navbar-expand-sm navbar-dark bg-success fixed-top">
+        <Link className="navbar-brand" to="/">
           <img
             src="logo192.png"
             alt="logo"
-            class="logo-nav"
+            className="logo-nav"
             height="32"
             width="32"
           />
           I3T
-        </a>
+        </Link>
         <button
-          class="navbar-toggler d-lg-none"
+          className="navbar-toggler d-lg-none"
           type="button"
           data-toggle="collapse"
           data-target="#collapsibleNavId"
@@ -28,39 +33,56 @@ function Nav(props) {
         <div className="collapse navbar-collapse" id="collapsibleNavId">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item active">
-              <a className="nav-link" href="home">
+              <Link className="nav-link" to="/">
                 Accueil <span className="sr-only">(current)</span>
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a className="nav-link" href="filieres">
+            <li className="nav-item">
+              <Link className="nav-link" to="/Filieres">
                 Filières
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a className="nav-link" href="preinscription">
+            <li className="nav-item">
+              <Link className="nav-link" to="/PreInscription">
                 Préinscription
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a className="nav-link" href="contact">
+            <li className="nav-item">
+              <Link className="nav-link" to="/Contact">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
+          <form className="form-inline my-2 my-lg-0">
             <input
-              class="form-control mr-sm-2"
+              className="form-control mr-sm-2"
               type="text"
               placeholder="Recherche"
             />
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+            <button
+              className="btn btn-outline-light my-2 my-sm-0"
+              type="submit"
+            >
               Recherche
             </button>
           </form>
         </div>
       </nav>
-    </div>
+      <Switch>
+        <Route path="/">
+          <Home />
+        </Route>
+        <Route path="/Filieres">
+          <Filieres />
+        </Route>
+        <Route path="/Preinscription">
+          <PreInscription Title="Test" />
+        </Route>
+        <Route path="/Contact">
+          <Contact />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
