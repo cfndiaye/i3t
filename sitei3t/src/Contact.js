@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 
 function Contact(props) {
@@ -8,9 +7,7 @@ function Contact(props) {
     watch,
     formState: { errors },
   } = useForm();
-  let classSujet = errors.subject
-    ? 'form-control is-invalid'
-    : 'form-control is-valid';
+  let classSujet = errors.subject ? 'form-control is-invalid' : 'form-control';
   const onSubmit = (data) => {
     console.log(data);
   };
