@@ -2,9 +2,7 @@ import React from 'react';
 function Home(props) {
   return (
     <div>
-      <h1>Accueil</h1>
-
-      <section className="jumbotron">
+      <section className="jumbotron bg-white">
         <div className="text-center">
           <h1 className="display-4">I3T</h1>
           <p className="lead">

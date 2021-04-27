@@ -16,12 +16,16 @@ function PreInscription(props) {
   console.log(watch('datenaissance')); //watch input value by passing the name of it
 
   return (
-    <div className="container-fluid">
-      <div className="display-4">{props.Title}</div>
+    <div className="container-fluid clearfix">
+      <div className="display-4 text-center">{props.Title}</div>
       <hr className="my-4" />
+      <div className="">
+        <h4>Pour faire une demande veuiller remplir ce formulaire</h4>
+        <br />
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
-          <div className="form-group col">
+          <div className="form-group col-sm-3">
             <label>Civilité</label>
             <select
               className="form-control"
@@ -36,7 +40,7 @@ function PreInscription(props) {
               <span className="text-danger">Ce champ est requis</span>
             )}
           </div>
-          <div className="form-group col">
+          <div className="form-group col-sm-3">
             <label>Prénom</label>
             <input
               {...register('prenom', { required: true })}
@@ -48,7 +52,7 @@ function PreInscription(props) {
               <span className="text-danger">Ce champ est requis</span>
             )}
           </div>
-          <div className="form-group col">
+          <div className="form-group col-sm-3">
             <label>Nom</label>
             <input
               {...register('nom', { required: true })}
@@ -60,7 +64,7 @@ function PreInscription(props) {
               <span className="text-danger">Ce champ est requis</span>
             )}
           </div>
-          <div className="form-group col">
+          <div className="form-group col-sm-3">
             <label>Date Naissance</label>
             <input
               {...register('datenaissance', { required: true })}
@@ -73,7 +77,7 @@ function PreInscription(props) {
           </div>
         </div>
         <div className="row">
-          <div className="form-group col">
+          <div className="form-group col-sm-6">
             <label>Email</label>
             <input
               {...register('email', { required: true })}
@@ -85,7 +89,7 @@ function PreInscription(props) {
               <span className="text-danger">Ce champ est requis</span>
             )}
           </div>
-          <div className="form-group col">
+          <div className="form-group col-sm-6">
             <label>Téléphone</label>
             <input
               {...register('telephone', { required: true })}
@@ -99,7 +103,7 @@ function PreInscription(props) {
           </div>
         </div>
         <div className="row">
-          <div className="form-group col">
+          <div className="form-group col-sm-6">
             <label>Formation</label>
             <select
               {...register('formation', { required: true })}
@@ -114,7 +118,7 @@ function PreInscription(props) {
               <span className="text-danger">Ce champ est requis</span>
             )}
           </div>
-          <div className="form-group col">
+          <div className="form-group col-sm-6">
             <label>Niveau</label>
             <select
               {...register('niveau', { required: true })}

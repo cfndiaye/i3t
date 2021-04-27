@@ -14,7 +14,7 @@ function App() {
           <nav className="navbar navbar-expand-sm navbar-dark bg-success">
             <Link className="navbar-brand" to="/">
               <img
-                src="logo192.png"
+                src="logo512.png"
                 alt="logo"
                 className="logo-nav"
                 height="32"
@@ -65,7 +65,7 @@ function App() {
                 <Filieres />
               </Route>
               <Route path="/PreInscription">
-                <PreInscription Title="Test" />
+                <PreInscription Title="Préinscription" />
               </Route>
               <Route path="/Contact">
                 <Contact />

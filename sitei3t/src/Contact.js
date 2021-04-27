@@ -8,7 +8,9 @@ function Contact(props) {
     watch,
     formState: { errors },
   } = useForm();
-
+  let classSujet = errors.subject
+    ? 'form-control is-invalid'
+    : 'form-control is-valid';
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -16,26 +18,31 @@ function Contact(props) {
   console.log(watch('subject'));
   return (
     <div>
-      <h1>Contact</h1>
+      <div className="text-center">
+        <h1 className="display-4">Contact</h1>
+      </div>
+      <hr />
       <div className="row">
         <div className="col-sm-6">
-          <div className="lead">
-            Pour nous contacter veuiller remplir ce formulaire
+          <div className="">
+            <h4>Pour nous contacter veuiller remplir ce formulaire</h4>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+
+          <form className="" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label>Objet</label>
+              <label className="form-label">Objet</label>
               <input
                 type="text"
                 {...register('subject', { required: true })}
-                className="form-control"
+                className={classSujet}
               />
+
               {errors.subject && (
                 <span className="text-danger">Ce champ est requis.</span>
               )}
             </div>
             <div className="form-group">
-              <label>Email</label>
+              <label className="form-label">Email</label>
               <input
                 type=""
                 {...register('email', { required: true })}
@@ -60,7 +67,10 @@ function Contact(props) {
           </form>
         </div>
         <div className="col-sm-6">
-          <div className="lead">Contact direct</div>
+          <div className="">
+            <h4>Contact direct</h4>
+          </div>
+
           <ul>
             <li>Tel: +221 33 827 40 88</li>
             <li>Adresse: VDN, 37 Liberte 6 Extension, Dakar</li>
