@@ -1,5 +1,5 @@
 import React from 'react';
-import Breadcrumb from './Breadcrumb';
+
 //import { useLocation } from 'react-router-dom';
 
 function Filieres(props) {
@@ -7,7 +7,7 @@ function Filieres(props) {
   return (
     <div>
       <div className="text-center">
-        <h1 className="display-4">Filieres</h1>
+        <h1 className="display-4">Nos Filieres</h1>
       </div>
 
       <div className="container">
@@ -20,9 +20,9 @@ function Filieres(props) {
                   Technicien supérieur en informatique et télécom
                 </h5>
                 <p className="card-text">
-                  Vous avez un baccalauréat en S1, S2, S3 ou F
+                  Vous avez un baccalauréat en S1, S2, S3 ou T
                 </p>
-                <a href="/Filieres" className="btn btn-warning text-white">
+                <a href="/Filieres" className="btn btn-success text-white">
                   Plus d'info
                 </a>
               </div>
