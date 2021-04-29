@@ -3,30 +3,48 @@ import { useForm } from 'react-hook-form';
 
 function PreInscription(props) {
   const [result, setResult] = useState();
-  const { errorResult, setErrorResult } = useState();
+  const [errorResult, setErrorResult] = useState();
+  const [messageSuccess, setMessageSuccess] = useState();
+  const [desabled, setDesabled] = useState();
   const {
     register,
     handleSubmit,
-    watch,
+    //watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    let options = { method: 'POST', body: data };
+    let donnee = JSON.stringify(data);
+    let options = {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: donnee,
+      //body: new URLSearchParams(new FormData(donnee)),
+    };
     let url = 'services/preinscription.php';
 
     fetch(url, options)
       .then((response) => {
         setResult(response.status);
-        console.log('some result' + response.status);
+        if (!response.ok) {
+          setErrorResult("erreur: quelque chose n'a pas fonctionné!");
+          //TODO: A enlever console.log('some error: ->' + errorResult);
+          return;
+        }
+        setMessageSuccess('Email envoyé avec succés. ');
+        //TODO: A enlever console.log('some result: ->' + result);
       })
+      .then(() =>
+        setDesabled(
+          '<button desabled className="btn btn-primary btn-lg ">Envoyer</button>'
+        )
+      )
       .catch((error) => {
-        setErrorResult(error.message);
-        console.log('some error:' + error.message);
+        setErrorResult(error);
+        //TODO: A enlever console.log('some error: ->' + errorResult);
       });
-    console.log('DEBUD_ERROR: ' + errorResult);
-    console.log('DEBUG_RESULT: ' + result);
   };
-  console.log(watch('datenaissance')); //watch input value by passing the name of it
 
   return (
     <div className="container-fluid clearfix">
@@ -147,9 +165,23 @@ function PreInscription(props) {
             )}
           </div>
         </div>
-
-        <button className="btn btn-primary btn-lg">Envoyer</button>
+        <div>
+          {desabled || (
+            <button className="btn btn-primary btn-lg ">Envoyer</button>
+          )}
+        </div>
       </form>
+      <br />
+      <div>
+        {(messageSuccess && (
+          <div className="alert alert-success text-center">
+            {messageSuccess}
+          </div>
+        )) ||
+          (errorResult && (
+            <div className="alert alert-danger text-center">{errorResult}</div>
+          ))}
+      </div>
     </div>
   );
 }

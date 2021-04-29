@@ -1,14 +1,25 @@
 <?php
 //Récupère et envoie les preinscriptions par email.
 //$objet = $_POST['subject'];
-$civilite = verify($_POST['civilite']);
-$prenom = verify($_POST['prenom']);
-$nom = verify($_POST['nom']);
-$datenaissance = verify($_POST['datenaissance']);
-$email = verify($_POST['email']);
-$telephone = verify($_POST['telephone']);
-$formation = verify($_POST['formation']);
-$niveau = verify($_POST['niveau']);
+$contentType = isset($_SERVER['CONTENT_TYPE'])? trim($_SERVER['CONTENT_TYPE']) : '';
+if($contentType === 'application/json'){
+  } else {
+  echo 'ERREUR';
+}
+  //recevoir le RAW post data 
+  $content = trim(file_get_contents("php://input"));
+  $decoded = json_decode($content);
+  if(!is_array($decoded)){
+    $civilite = verify($decoded->civilite);
+    $prenom = verify($decoded->prenom);
+    $nom = verify($decoded->nom);
+    $datenaissance = verify($decoded->datenaissance);
+    $email = verify($decoded->email);
+    $telephone = verify($decoded->telephone);
+    $formation = verify($decoded->formation);
+    $niveau = verify($decoded->niveau);
+  }
+
 
 function verify($data){
   $data = trim($data);
@@ -35,4 +46,5 @@ $message .= "Niveau: <strong>" . $niveau . "\r\n";
 
 //envoie
 mail($to,$objet,$message,$headers);
+
 ?>
