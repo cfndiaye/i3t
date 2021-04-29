@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 
 function PreInscription(props) {
   const [result, setResult] = useState();
+  const { errorResult, setErrorResult } = useState();
   const {
     register,
     handleSubmit,
@@ -10,8 +11,20 @@ function PreInscription(props) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    setResult(data.datenaissance);
-    console.log(data);
+    let options = { method: 'POST', body: data };
+    let url = 'services/preinscription.php';
+
+    fetch(url, options)
+      .then((response) => {
+        setResult(response.status);
+        console.log('some result' + response.status);
+      })
+      .catch((error) => {
+        setErrorResult(error.message);
+        console.log('some error:' + error.message);
+      });
+    console.log('DEBUD_ERROR: ' + errorResult);
+    console.log('DEBUG_RESULT: ' + result);
   };
   console.log(watch('datenaissance')); //watch input value by passing the name of it
 
@@ -137,7 +150,6 @@ function PreInscription(props) {
 
         <button className="btn btn-primary btn-lg">Envoyer</button>
       </form>
-      <div>{result}</div>
     </div>
   );
 }
