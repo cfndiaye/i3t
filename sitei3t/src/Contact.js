@@ -9,24 +9,20 @@ function Contact(props) {
     formState: { errors },
   } = useForm();
   //let classSujet = errors.subject ? 'form-control is-invalid' : 'form-control';
-  const [classSujet, setClassSujet] = useState('form-control');
+  const [bloquerInput, setBloquerInput] = useState('form-control');
+  const [classNormal, setClassNormal] = useState('form-control');
   const [errorResult, setErrorResult] = useState();
   const [successResult, setSuccessResult] = useState();
   const [formContacts, setFormContacts] = useState({
-    sujet: '123',
+    sujet: '',
     email: '',
     message: '',
   });
 
   //handleChange
-  const handleChange = (event) => {
-    // if (errors.sujet) {
-    //   setClassSujet('form-control is-invalid');
-    // } else {
-    //   setClassSujet('form-control');
-    // }
-    setFormContacts({ ...formContacts, sujet: event.target.value });
-  };
+  // const handleChange = (event) => {
+  //   setFormContacts({ ...formContacts, sujet: event.target.value });
+  // };
 
   //envoie du formulaire de contact
   const onSubmit = (data) => {
@@ -42,9 +38,11 @@ function Contact(props) {
     fetch(url, options).then((response) => {
       if (!response.ok) {
         setErrorResult("Erreur quelque chose n'a pas fonctionné!!!");
+        setClassNormal('form-control');
         return;
       }
       setSuccessResult('Votre message est envoyer avec succès.');
+      setBloquerInput('form-control disabled');
     });
   };
 
@@ -67,43 +65,46 @@ function Contact(props) {
             <div className="alert alert-success">{successResult}</div>
           )}
           <form className="" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label className="form-label">Objet</label>
-              <input
-                onChange={handleChange}
-                type="text"
-                value={formContacts.sujet}
-                placeholder="objet de votre message"
-                {...register('sujet', { required: true })}
-                className={classSujet}
-              />
+            <fieldset>
+              <div className="form-group">
+                <label className="form-label">Objet</label>
+                <input
+                  //onChange={handleChange}
 
-              {errors.sujet && (
-                <span className="text-danger">Ce champ est requis.</span>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email</label>
-              <input
-                type=""
-                {...register('email', { required: true })}
-                className="form-control"
-                placeholder="email@exemple.com"
-              />
-              {errors.email && (
-                <span className="text-danger">Ce champ est requis.</span>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea
-                className="form-control"
-                {...register('message', { required: true })}
-              ></textarea>
-              {errors.message && (
-                <span className="text-danger">Ce champ est requis.</span>
-              )}
-            </div>
+                  type="text"
+                  //value={formContacts.sujet}
+                  placeholder="objet de votre message"
+                  {...register('sujet', { required: true })}
+                  className={successResult ? bloquerInput : classNormal}
+                />
+
+                {errors.sujet && (
+                  <span className="text-danger">Ce champ est requis.</span>
+                )}
+              </div>
+              <div className="form-group">
+                <label className="form-label">Email</label>
+                <input
+                  type=""
+                  {...register('email', { required: true })}
+                  className={successResult ? bloquerInput : classNormal}
+                  placeholder="email@exemple.com"
+                />
+                {errors.email && (
+                  <span className="text-danger">Ce champ est requis.</span>
+                )}
+              </div>
+              <div className="form-group">
+                <label>Message</label>
+                <textarea
+                  className={successResult ? bloquerInput : classNormal}
+                  {...register('message', { required: true })}
+                ></textarea>
+                {errors.message && (
+                  <span className="text-danger">Ce champ est requis.</span>
+                )}
+              </div>
+            </fieldset>
             {(successResult && (
               <button disabled className="btn btn-secondary">
                 Message Envoyé
