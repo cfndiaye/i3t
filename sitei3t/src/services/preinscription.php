@@ -1,7 +1,8 @@
 <?php
 //Récupère et envoie les preinscriptions par email.
 //$objet = $_POST['subject'];
-$contentType = isset($_SERVER['CONTENT_TYPE'])? trim($_SERVER['CONTENT_TYPE']) : '';
+$contentType = isset($_SERVER['CONTENT_TYPE'])? 
+trim($_SERVER['CONTENT_TYPE']) : '';
 if($contentType === 'application/json'){
   } else {
   echo 'ERREUR';
@@ -30,6 +31,7 @@ function verify($data){
 
 //envoi du mail 
 $to = "cfndiaye@gmail.com";
+$objet = "Demande de préinscription I3T pour " . $prenom ." ".$nom;
 
 // Toujours definir le content-type pour envoyer un mail html
 $headers = "MIME-Version: 1.0" . "\r\n";
@@ -37,14 +39,12 @@ $headers .= "Content-type:text/html;charset=Utf-8" . "\r\n";
 $headers .= 'From: <'. $email . '>' . "\r\n";
 
 //Composition du message
-$message = "Bonjour veuillez trouver ci-dessous mes informations pour une demande de préinscription" . "\r\n";
-$message .= "Prénom et nom: <strong>" . $civilite . " " . $prenom . " " . $nom . "</strong>" . "\r\n";
-$message .= "Date de naissance: <strong>" . $datenaissance . "\r\n";
-$message .= "Téléphone: <strong>" . $telephone . "\r\n";
-$message .= "Filière: <strong>" . $formation. "\r\n";
-$message .= "Niveau: <strong>" . $niveau . "\r\n";
+$message = "Bonjour veuillez trouver ci-dessous mes informations pour une demande de préinscription:" . "<br/>";
+$message .= "Prénom et nom: <strong>" . $civilite . " " . $prenom . " " . $nom . "</strong>" . "<br/>";
+$message .= "Date de naissance: <strong>" . $datenaissance . "<br/>";
+$message .= "Téléphone: <strong>" . $telephone . "<br/>";
+$message .= "Filière: <strong>" . $formation. "<br/>";
+$message .= "Niveau: <strong>" . $niveau . "<br/>";
 
 //envoie
 mail($to,$objet,$message,$headers);
-
-?>

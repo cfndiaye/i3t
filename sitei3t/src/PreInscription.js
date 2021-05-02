@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 function PreInscription(props) {
-  const [result, setResult] = useState();
+  //const [result, setResult] = useState();
   const [errorResult, setErrorResult] = useState();
   const [messageSuccess, setMessageSuccess] = useState();
   const [desabled, setDesabled] = useState();
@@ -12,6 +12,7 @@ function PreInscription(props) {
     //watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     let donnee = JSON.stringify(data);
     let options = {
@@ -26,23 +27,19 @@ function PreInscription(props) {
 
     fetch(url, options)
       .then((response) => {
-        setResult(response.status);
+        //setResult(response.status);
         if (!response.ok) {
           setErrorResult("erreur: quelque chose n'a pas fonctionné!");
-          //TODO: A enlever console.log('some error: ->' + errorResult);
+
           return;
         }
         setMessageSuccess('Email envoyé avec succés. ');
+        setDesabled(true);
         //TODO: A enlever console.log('some result: ->' + result);
       })
-      .then(() =>
-        setDesabled(
-          '<button desabled className="btn btn-primary btn-lg ">Envoyer</button>'
-        )
-      )
+
       .catch((error) => {
         setErrorResult(error);
-        //TODO: A enlever console.log('some error: ->' + errorResult);
       });
   };
 
@@ -57,9 +54,11 @@ function PreInscription(props) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="form-group col-sm-3">
-            <label>Civilité</label>
+            <label>
+              Civilité<span>*</span>
+            </label>
             <select
-              className="form-control"
+              className="form-control form-control-lg"
               {...register('civilite', { required: true })}
             >
               <option></option>
@@ -72,11 +71,13 @@ function PreInscription(props) {
             )}
           </div>
           <div className="form-group col-sm-3">
-            <label>Prénom</label>
+            <label>
+              Prénom<span>*</span>
+            </label>
             <input
               {...register('prenom', { required: true })}
               type="text"
-              className="form-control"
+              className="form-control form-control-lg required"
               placeholder="Prenom"
             />
             {errors.prenom && (
@@ -84,11 +85,13 @@ function PreInscription(props) {
             )}
           </div>
           <div className="form-group col-sm-3">
-            <label>Nom</label>
+            <label>
+              Nom<span>*</span>
+            </label>
             <input
               {...register('nom', { required: true })}
               type="text"
-              className="form-control"
+              className="form-control form-control-lg"
               placeholder="nom"
             />
             {errors.nom && (
@@ -96,11 +99,14 @@ function PreInscription(props) {
             )}
           </div>
           <div className="form-group col-sm-3">
-            <label>Date Naissance</label>
+            <label>
+              Date Naissance<span>*</span>
+            </label>
             <input
               {...register('datenaissance', { required: true })}
               type="date"
-              className="form-control"
+              value="2000-01-14"
+              className="form-control form-control-lg"
             />
             {errors.datenaissance && (
               <span className="text-danger">Ce champ est requis</span>
@@ -109,11 +115,13 @@ function PreInscription(props) {
         </div>
         <div className="row">
           <div className="form-group col-sm-6">
-            <label>Email</label>
+            <label>
+              Email<span>*</span>
+            </label>
             <input
               {...register('email', { required: true })}
               type="email"
-              className="form-control"
+              className="form-control form-control-lg"
               placeholder="monemail@exemple.com"
             />
             {errors.email && (
@@ -121,11 +129,13 @@ function PreInscription(props) {
             )}
           </div>
           <div className="form-group col-sm-6">
-            <label>Téléphone</label>
+            <label>
+              Téléphone<span>*</span>
+            </label>
             <input
               {...register('telephone', { required: true })}
               type="tel"
-              className="form-control"
+              className="form-control form-control-lg"
               placeholder="Téléphone"
             />
             {errors.telephone && (
@@ -135,10 +145,12 @@ function PreInscription(props) {
         </div>
         <div className="row">
           <div className="form-group col-sm-6">
-            <label>Formation</label>
+            <label>
+              Formation<span>*</span>
+            </label>
             <select
               {...register('formation', { required: true })}
-              className="form-control"
+              className="form-control form-control-lg"
             >
               <option></option>
               <option>Formation 1</option>
@@ -150,10 +162,12 @@ function PreInscription(props) {
             )}
           </div>
           <div className="form-group col-sm-6">
-            <label>Niveau</label>
+            <label>
+              Niveau<span>*</span>
+            </label>
             <select
               {...register('niveau', { required: true })}
-              className="form-control"
+              className="form-control form-control-lg"
             >
               <option></option>
               <option value="BTS">BTS</option>
@@ -166,9 +180,11 @@ function PreInscription(props) {
           </div>
         </div>
         <div>
-          {desabled || (
-            <button className="btn btn-primary btn-lg ">Envoyer</button>
-          )}
+          {(desabled && (
+            <button disabled className="btn btn-secondary btn-lg ">
+              Envoyer
+            </button>
+          )) || <button className="btn btn-primary btn-lg ">Envoyer</button>}
         </div>
       </form>
       <br />
