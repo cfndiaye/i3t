@@ -5,25 +5,47 @@ function Contact(props) {
   const {
     register,
     handleSubmit,
-    //watch,
+    watch,
     formState: { errors },
   } = useForm();
   //let classSujet = errors.subject ? 'form-control is-invalid' : 'form-control';
-  const [bloquerInput, setBloquerInput] = useState('form-control');
-  const [classNormal, setClassNormal] = useState('form-control');
+
   const [errorResult, setErrorResult] = useState();
   const [successResult, setSuccessResult] = useState();
-  const [formContacts, setFormContacts] = useState({
-    sujet: '',
-    email: '',
-    message: '',
-  });
+  const [classPrenom, setClassPrenom] = useState('form-control');
+  const [classNom, setClassNom] = useState('form-control');
+  const [classSujet, setClassSujet] = useState('form-control');
+  const [classEmail, setClassEmail] = useState('form-control');
+  const [classMessage, setClassMessage] = useState('form-control');
 
-  //handleChange
-  // const handleChange = (event) => {
-  //   setFormContacts({ ...formContacts, sujet: event.target.value });
-  // };
-
+  //si il ya erreur
+  const onError = (err) => {
+    if (err.prenom) {
+      setClassPrenom('form-control is-invalid');
+    } else {
+      setClassPrenom('form-control is-valid');
+    }
+    if (err.nom) {
+      setClassNom('form-control is-invalid');
+    } else {
+      setClassNom('form-control is-valid');
+    }
+    if (err.sujet) {
+      setClassSujet('form-control is-invalid');
+    } else {
+      setClassSujet('form-control is-valid');
+    }
+    if (err.email) {
+      setClassEmail('form-control is-invalid');
+    } else {
+      setClassEmail('form-control is-valid');
+    }
+    if (err.message) {
+      setClassMessage('form-control is-invalid');
+    } else {
+      setClassMessage('form-control is-valid');
+    }
+  };
   //envoie du formulaire de contact
   const onSubmit = (data) => {
     let donnee = JSON.stringify(data);
@@ -38,12 +60,20 @@ function Contact(props) {
     fetch(url, options).then((response) => {
       if (!response.ok) {
         setErrorResult("Erreur quelque chose n'a pas fonctionné!!!");
-        setClassNormal('form-control');
+
         return;
       }
       setSuccessResult('Votre message est envoyer avec succès.');
-      setBloquerInput('form-control disabled');
     });
+  };
+
+  //on change
+  const handleChange = (event) => {
+    //let valeur = watch('prenom');
+    // if (valeur) {
+    //   setClassPrenom('form-control is-valid');
+    // }
+    console.log(watch('prenom'));
   };
 
   return (
@@ -64,10 +94,45 @@ function Contact(props) {
           {successResult && (
             <div className="alert alert-success">{successResult}</div>
           )}
-          <form className="" onSubmit={handleSubmit(onSubmit)}>
+          <form className="" onSubmit={handleSubmit(onSubmit, onError)}>
             <fieldset>
+              <div className="row">
+                <div className="form-group col-sm-6">
+                  <label>
+                    Prénom<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Prénom"
+                    {...register('prenom', {
+                      required: true,
+                      onChange: handleChange,
+                    })}
+                    className={classPrenom}
+                  />
+                  {errors.prenom && (
+                    <span className="text-danger">ce champ est requis.</span>
+                  )}
+                </div>
+                <div className="form-group col-sm-6">
+                  <label>
+                    Nom<span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Nom"
+                    {...register('nom', { required: true })}
+                    className={classNom}
+                  />
+                  {errors.nom && (
+                    <span className="text-danger">ce champ est requis.</span>
+                  )}
+                </div>
+              </div>
               <div className="form-group">
-                <label className="form-label">Objet</label>
+                <label className="form-label">
+                  Objet<span className="text-danger">*</span>
+                </label>
                 <input
                   //onChange={handleChange}
 
@@ -75,7 +140,7 @@ function Contact(props) {
                   //value={formContacts.sujet}
                   placeholder="objet de votre message"
                   {...register('sujet', { required: true })}
-                  className={successResult ? bloquerInput : classNormal}
+                  className={classSujet}
                 />
 
                 {errors.sujet && (
@@ -83,11 +148,13 @@ function Contact(props) {
                 )}
               </div>
               <div className="form-group">
-                <label className="form-label">Email</label>
+                <label className="form-label">
+                  Email<span className="text-danger">*</span>
+                </label>
                 <input
-                  type=""
+                  type="email"
                   {...register('email', { required: true })}
-                  className={successResult ? bloquerInput : classNormal}
+                  className={classEmail}
                   placeholder="email@exemple.com"
                 />
                 {errors.email && (
@@ -95,9 +162,11 @@ function Contact(props) {
                 )}
               </div>
               <div className="form-group">
-                <label>Message</label>
+                <label>
+                  Message<span className="text-danger">*</span>
+                </label>
                 <textarea
-                  className={successResult ? bloquerInput : classNormal}
+                  className={classMessage}
                   {...register('message', { required: true })}
                 ></textarea>
                 {errors.message && (
@@ -109,7 +178,7 @@ function Contact(props) {
               <button disabled className="btn btn-secondary">
                 Message Envoyé
               </button>
-            )) || <button className="btn btn-primary">Envoyer</button>}
+            )) || <button className="btn btn-success">Envoyer</button>}
           </form>
         </div>
         <div className="col-sm-6">

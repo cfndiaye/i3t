@@ -43,4 +43,7 @@
   height: 60px;
   line-height: 60px;
   /*background-color: black;*/
+  position: relative;
+  overflow: hidden;
+  display: block;
 }

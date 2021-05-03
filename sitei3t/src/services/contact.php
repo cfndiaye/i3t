@@ -12,6 +12,8 @@ if ($contentType === 'application/json') {
 $content = trim(file_get_contents("php://input"));
 $decoded = json_decode($content);
 if (!is_array($decoded)) {
+  $prenom = verify($decoded->prenom);
+  $nom = verify($decoded->nom);
   $sujet = verify($decoded->sujet);
   $email = verify($decoded->email);
   $message = verify($decoded->message);
@@ -32,5 +34,10 @@ $to = "cfndiaye@gmail.com";
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=Utf-8" . "\r\n";
 $headers .= "From: <" . $email . ">" . "\r\n";
+//Marquage du message 
+$message .= "<br/> <hr/>";
+$message .= "De: " . $prenom . " " . $nom;
+$message .= "<br/> <hr/>";
+$message .= "<span>Ce message a été envoyé depuis votre site web www.i3t.sn</span>";
 //envoie
-mail($to, $objet, $message, $headers);
+mail($to, $sujet, $message, $headers);
