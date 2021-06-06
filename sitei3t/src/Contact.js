@@ -77,7 +77,7 @@ function Contact(props) {
   };
 
   return (
-    <div>
+    <>
       <div className="text-center">
         <h1 className="display-4">Contact</h1>
       </div>
@@ -191,7 +191,7 @@ function Contact(props) {
           </ul>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

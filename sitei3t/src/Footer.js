@@ -3,9 +3,6 @@ import React from 'react';
 function Footer(props) {
   return (
     <div className="fixed-bottom">
-      <div className="text-center">
-        <img src="partenaire.png" alt="partemaires" />
-      </div>
       <footer className="footer bg-dark">
         <div className="container-fluid">
           <div className="d-flex justify-content-between">
@@ -18,7 +15,7 @@ function Footer(props) {
                 By Cfndiaye
               </a>
             </div>
-            <div className="text-muted">&#169;2021 </div>
+            <div className="text-muted">&#169;I3T 2010-2021 </div>
           </div>
         </div>
       </footer>
