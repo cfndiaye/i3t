@@ -29,7 +29,7 @@ function verify($data)
 }
 
 //envoie du mail
-$to = "cfndiaye@gmail.com";
+$to = "i3t.edu@gmail.com";
 // Toujours definir le content-type pour envoyer un mail html
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=Utf-8" . "\r\n";
