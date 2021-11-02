@@ -58,7 +58,6 @@ function App() {
               </ul>
             </div>
           </nav>
-
           <div className="container-fluid">
             <Switch>
               <Route path="/Filieres">
